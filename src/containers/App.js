@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 
 import { Container, Button, TextField, Grid } from '@material-ui/core';
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from '@material-ui/icons/Delete';
-import ListItemText from "@material-ui/core/ListItemText";
 
 import './App.css';
 
@@ -16,8 +10,7 @@ import { createTodo } from '../actions/createTodo'
 import { toggleCompleteTodo } from '../actions/toggleCompleteTodo'
 import { deleteTodo } from '../actions/deleteTodo'
 
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Checkbox from "@material-ui/core/Checkbox";
+import TodoItem from "./TodoItem";
 
 const mapDispatchToProps = dispatch => ({
   createTodo: description => dispatch(createTodo(description)),
@@ -53,34 +46,14 @@ class App extends Component {
   };
 
   render() {
-    const listItems = this.props.todoItems.map(todoItem => {
-      const listItemClassName = classNames({'List-item-done': todoItem.completed});
-      return (
-        <ListItem className={listItemClassName}>
-          <ListItemIcon>
-            <Checkbox
-              style = {{
-                color: "green",
-              }}
-              edge="start"
-              checked={todoItem.completed}
-              onChange={() => this.props.toggleCompleteTodo(todoItem.id)}
-            />
-          </ListItemIcon>
-          <ListItemText
-            primary={todoItem.description}
-          />
-          <ListItemSecondaryAction>
-            <IconButton
-              edge="end"
-              aria-label="delete"
-              onClick={() => this.props.deleteTodo(todoItem.id)}>
-              <DeleteIcon />
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-      )
-    });
+    const listItems = this.props.todoItems.map(todoItem => (
+      <TodoItem
+        key={todoItem.id}
+        todoItem={todoItem}
+        toggleCompleteTodo={this.props.toggleCompleteTodo}
+        deleteTodo={this.props.deleteTodo}
+      />
+    ));
 
     return (
       <Container className="App-container" maxWidth="sm">
