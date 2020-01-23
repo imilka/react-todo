@@ -18,10 +18,17 @@ const initialState = [
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'SIMPLE_ACTION':
-      return {
-        result: action.payload
-      };
+    case 'CREATE_TODO':
+      const nextTodoId = state[state.length - 1].id + 1;
+
+      return [
+        ...state,
+        {
+          id: nextTodoId,
+          description: action.description,
+          completed: false
+        }
+      ];
     default:
       return state
   }

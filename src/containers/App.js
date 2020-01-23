@@ -12,12 +12,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 import './App.css';
 
-import { simpleAction } from '../actions/simpleAction'
+import { createTodo } from '../actions/createTodo'
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const mapDispatchToProps = dispatch => ({
-  simpleAction: () => dispatch(simpleAction())
+  createTodo: description => dispatch(createTodo(description))
 });
 
 const mapStateToProps = state => ({
@@ -25,6 +25,27 @@ const mapStateToProps = state => ({
 });
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      pendingTodoDescription: ''
+    };
+  }
+
+  handlePendingTodoDescriptionChange = event => {
+    this.setState({
+      pendingTodoDescription: event.target.value
+    });
+  };
+
+  createTodo = () => {
+    this.props.createTodo(this.state.pendingTodoDescription);
+    this.setState({
+      pendingTodoDescription: ''
+    });
+  };
 
   render() {
     const listItems = this.props.todoItems.map(todoItem => {
@@ -60,14 +81,17 @@ class App extends Component {
             <TextField
               fullWidth
               label="Task description"
-              defaultValue="Hello World"
+              value={this.state.pendingTodoDescription}
+              onChange={this.handlePendingTodoDescriptionChange}
             />
           </Grid>
           <Grid item xs={3}>
             <Button
               fullWidth
               variant="contained"
-              color="primary">
+              color="primary"
+              disabled={!this.state.pendingTodoDescription}
+              onClick={this.createTodo}>
               Add
             </Button>
           </Grid>
