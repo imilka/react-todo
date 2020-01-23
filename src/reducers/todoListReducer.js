@@ -1,25 +1,7 @@
-const initialState = [
-  {
-    id: 1,
-    description: "Aodo item 1",
-    completed: false
-  },
-  {
-    id: 2,
-    description: "Zodo item 2",
-    completed: true
-  },
-  {
-    id: 3,
-    description: "Codo item 3",
-    completed: false
-  }
-];
-
-export default (state = initialState, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case 'CREATE_TODO':
-      const nextTodoId = state[state.length - 1].id + 1;
+      const nextTodoId = state.length === 0 ? 0 : state[state.length - 1].id + 1;
 
       return [
         ...state,
