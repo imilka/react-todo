@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 
 import { Container, Button, TextField, Grid } from '@material-ui/core';
 import List from "@material-ui/core/List";
@@ -20,12 +21,38 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-  ...state
+  todoItems: state.todoList
 });
 
 class App extends Component {
 
   render() {
+    const listItems = this.props.todoItems.map(todoItem => {
+      const listItemClassName = classNames({'List-item-done': todoItem.completed});
+      return (
+        <ListItem className={listItemClassName}>
+          <ListItemIcon>
+            <Checkbox
+              style = {{
+                color: "green",
+              }}
+              edge="start"
+              checked={todoItem.completed}
+              disableRipple
+            />
+          </ListItemIcon>
+          <ListItemText
+            primary={todoItem.description}
+          />
+          <ListItemSecondaryAction>
+            <IconButton edge="end" aria-label="delete">
+              <DeleteIcon />
+            </IconButton>
+          </ListItemSecondaryAction>
+        </ListItem>
+      )
+    });
+
     return (
       <Container className="App-container" maxWidth="sm">
         <Grid container direction="row" spacing={3}>
@@ -46,65 +73,7 @@ class App extends Component {
           </Grid>
           <Grid item xs={12}>
             <List>
-              <ListItem>
-                <ListItemIcon>
-                  <Checkbox
-                    style = {{
-                      color: "green",
-                    }}
-                    edge="start"
-                    checked
-                    disableRipple
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primary="To do something very hard and very long so I can check how long task descriptions fit into this layout"
-                />
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <ListItem>
-                <ListItemIcon>
-                  <Checkbox
-                    style = {{
-                      color: "green",
-                    }}
-                    edge="start"
-                    disableRipple
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Task 2"
-                />
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
-              <ListItem className="List-item-done">
-                <ListItemIcon>
-                  <Checkbox
-                    style = {{
-                      color: "green",
-                    }}
-                    edge="start"
-                    checked
-                    disableRipple
-                  />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Task 3"
-                />
-                <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItemSecondaryAction>
-              </ListItem>
+              {listItems}
             </List>
           </Grid>
         </Grid>
