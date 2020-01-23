@@ -9,13 +9,15 @@ import './App.css';
 import { createTodo } from '../actions/createTodo'
 import { toggleCompleteTodo } from '../actions/toggleCompleteTodo'
 import { deleteTodo } from '../actions/deleteTodo'
+import { editTodo } from '../actions/editTodo'
 
 import TodoItem from "./TodoItem";
 
 const mapDispatchToProps = dispatch => ({
   createTodo: description => dispatch(createTodo(description)),
   toggleCompleteTodo: id => dispatch(toggleCompleteTodo(id)),
-  deleteTodo: id => dispatch(deleteTodo(id))
+  deleteTodo: id => dispatch(deleteTodo(id)),
+  editTodo: (id, description) => dispatch(editTodo(id, description))
 });
 
 const mapStateToProps = state => ({
@@ -52,6 +54,7 @@ class App extends Component {
         todoItem={todoItem}
         toggleCompleteTodo={this.props.toggleCompleteTodo}
         deleteTodo={this.props.deleteTodo}
+        editTodo={this.props.editTodo}
       />
     ));
 

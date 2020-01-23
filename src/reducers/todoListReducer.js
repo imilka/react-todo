@@ -37,6 +37,10 @@ export default (state = initialState, action) => {
       return state.filter(todo => {
         return todo.id !== action.id
       });
+    case 'EDIT_TODO':
+      return state.map(todo => {
+        return todo.id === action.id ? { ...todo, description: action.description } : todo
+      });
     default:
       return state
   }
