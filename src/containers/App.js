@@ -13,11 +13,14 @@ import ListItemText from "@material-ui/core/ListItemText";
 import './App.css';
 
 import { createTodo } from '../actions/createTodo'
+import { toggleCompleteTodo } from '../actions/toggleCompleteTodo'
+
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const mapDispatchToProps = dispatch => ({
-  createTodo: description => dispatch(createTodo(description))
+  createTodo: description => dispatch(createTodo(description)),
+  toggleCompleteTodo: id => dispatch(toggleCompleteTodo(id))
 });
 
 const mapStateToProps = state => ({
@@ -59,7 +62,7 @@ class App extends Component {
               }}
               edge="start"
               checked={todoItem.completed}
-              disableRipple
+              onChange={() => this.props.toggleCompleteTodo(todoItem.id)}
             />
           </ListItemIcon>
           <ListItemText
