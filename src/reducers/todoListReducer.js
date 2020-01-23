@@ -1,17 +1,17 @@
 const initialState = [
   {
     id: 1,
-    description: "Todo item 1",
+    description: "Aodo item 1",
     completed: false
   },
   {
     id: 2,
-    description: "Todo item 2",
+    description: "Zodo item 2",
     completed: true
   },
   {
     id: 3,
-    description: "Todo item 3",
+    description: "Codo item 3",
     completed: false
   }
 ];

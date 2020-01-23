@@ -20,9 +20,16 @@ const mapDispatchToProps = dispatch => ({
   editTodo: (id, description) => dispatch(editTodo(id, description))
 });
 
-const mapStateToProps = state => ({
-  todoItems: state.todoList
-});
+const mapStateToProps = state => {
+  // should use something like reselect here
+  const sorted = state.todoList.slice().sort((a, b) => {
+    return b.description.toString().localeCompare(a.description);
+  });
+
+  return {
+    todoItems: sorted
+  };
+};
 
 class App extends Component {
 
