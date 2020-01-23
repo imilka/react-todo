@@ -14,13 +14,15 @@ import './App.css';
 
 import { createTodo } from '../actions/createTodo'
 import { toggleCompleteTodo } from '../actions/toggleCompleteTodo'
+import { deleteTodo } from '../actions/deleteTodo'
 
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Checkbox from "@material-ui/core/Checkbox";
 
 const mapDispatchToProps = dispatch => ({
   createTodo: description => dispatch(createTodo(description)),
-  toggleCompleteTodo: id => dispatch(toggleCompleteTodo(id))
+  toggleCompleteTodo: id => dispatch(toggleCompleteTodo(id)),
+  deleteTodo: id => dispatch(deleteTodo(id))
 });
 
 const mapStateToProps = state => ({
@@ -69,7 +71,10 @@ class App extends Component {
             primary={todoItem.description}
           />
           <ListItemSecondaryAction>
-            <IconButton edge="end" aria-label="delete">
+            <IconButton
+              edge="end"
+              aria-label="delete"
+              onClick={() => this.props.deleteTodo(todoItem.id)}>
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>
